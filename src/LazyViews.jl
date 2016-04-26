@@ -41,7 +41,18 @@ import Base.*
 *{T, N}(c::Number, lv::LazyView{T, N}) = lv * c;
 
 # Forward size calls to base array
-Base.size(amv::AbstractLazyView) = size(amv.a);
+Base.size(amv::AbstractLazyView)          =   size(amv.a);
+Base.size(amv::AbstractLazyView, ds...)   =   size(amv.a, ds...);
+Base.eltype(amv::AbstractLazyView)        =   eltype(amv.a);
+Base.elsize(amv::AbstractLazyView)        =   elsize(amv.a);
+Base.ndims(amv::AbstractLazyView)         =   ndims(amv.a);
+Base.length(amv::AbstractLazyView)        =   length(amv.a);
+Base.endof(amv::AbstractLazyView)         =   endof(amv.a);
+Base.first(amv::AbstractLazyView)         =   amv[1];
+Base.last(amv::AbstractLazyView)          =   getindex(amv, length(amv));
+Base.start(amv::AbstractLazyView)         =   1;
+Base.next(amv::AbstractLazyView, i::Int)  =   (amv[i], i+1);
+Base.done(amv::AbstractLazyView, i::Int)  =   i > length(amv);
 
 import Base.==
 function =={T, N}(mv::AbstractLazyView, a::Array{T, N})

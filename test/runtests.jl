@@ -30,6 +30,9 @@ for n=1:_NFPTESTS
     @test(map(f, a) == lv);
     @test(mv == lv);
     @test(lvlv == map(f, map(f, a)));
+    for (x, y) in zip(mv, map(f, a))
+      @test(x == y);
+    end
   end
   if (n % (_NFPTESTS / 10)) == 0
     print("$pdone%... ");
@@ -56,6 +59,9 @@ for n=1:_SMTESTS
     @test(cv == lv);
     @test((c * (c * a)) == (c * lv));
     @test((c * (c * a)) == (lv * c));
+    for (x, y) in zip(cv, map(x -> c*x, a))
+      @test(x == y);
+    end
   end
   if (n % (_SMTESTS / 10)) == 0
     print("$pdone%... ");
